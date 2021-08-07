@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node server.js"
+    "start": "babel-node server.js",
+    "callback": "babel-node callback.js",
+    "promise": "babel-node promise.js",
+    "async-await": "babel-node async-await"
   },
   "repository": {
     "type": "git",
