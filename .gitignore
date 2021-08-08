@@ -36,3 +36,5 @@ yarn-debug.log*
 .yarn-integrity
 /dump.rdb
 /.env
+
+sh/env.sh
