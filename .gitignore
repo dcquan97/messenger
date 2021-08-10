@@ -35,6 +35,7 @@
 yarn-debug.log*
 .yarn-integrity
 /dump.rdb
-/.env
+sh/.env
 
 sh/env.sh
+src/public/bower_components
