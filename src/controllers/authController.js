@@ -5,9 +5,19 @@ let getLoginRegister = (req, res) => {
 };
 
 let postRegister = (req, res) => {
-  console.log(validationResult(req).isEmpty());
-  console.log("-------------------------------");
-  console.log(validationResult(req).mapped());
+  let errorArr = [];
+
+  let validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty()) {
+    let errors = Object.value(validationErrorss.mapped());
+    errors.forEach( item => {
+      errorArr.push(item.msg);
+    });
+
+    req.flash("errors", errorArr);
+    return res.redirect("/login-register")
+  }
+  console.log(req.body);
 };
 
 module.exports = {
