@@ -1,4 +1,17 @@
 import session from "express-session";
+import connectMongo from "connect-mongo";
+
+let MongoStore = connectMongo(session);
+
+/**
+ * config session for app
+ * This variable is where save session, in this case is mongodb
+*/
+let sessionStore = new MongoStore({
+  url: `mongodb://localhost:27017/awesome_chat`,
+  autoReconnect: true,
+  // autoRemove: "native"
+});
 
 /**
  * config session for app
@@ -8,13 +21,13 @@ let configSessions = (app) => {
   app.use(session({
     key: "express.sid",
     secret: "mySecret",
-    // store:
+    store: sessionStore,
     resave: true,
     saveUninitialized: false,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 // 86400000 seconds = 1 day
     }
-  }))
+  }));
 };
 
 module.exports = configSessions;

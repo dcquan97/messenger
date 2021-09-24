@@ -3,6 +3,8 @@ import express from "express";
 import ConnectDB from "./config/connectDB";
 import configViewEngine from "./config/viewEngine";
 import initRoutes from "./routes/web";
+import connectFlash from "connect-flash";
+import configSession from "./config/session";
 
 // Init app
 let app = express();
@@ -10,8 +12,18 @@ let app = express();
 // connect to mongodb
 ConnectDB();
 
+// Config session
+
+configSession(app);
+
 // config viewengine
 configViewEngine(app);
+
+// Enable post data for request
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Enable flash message
+app.use(connectFlash());
 
 //config routes
 initRoutes(app);
