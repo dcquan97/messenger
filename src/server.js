@@ -4,6 +4,7 @@ import ConnectDB from "./config/connectDB";
 import configViewEngine from "./config/viewEngine";
 import initRoutes from "./routes/web";
 import connectFlash from "connect-flash";
+import bodyParser from "body-parser";
 import configSession from "./config/session";
 
 // Init app
