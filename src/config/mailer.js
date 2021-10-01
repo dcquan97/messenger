@@ -15,6 +15,14 @@ let sendMail = (to, subject, htmlContent) => {
       password: adminPassword
     }
   });
+
+  let options = {
+    from: adminEmail,
+    to: to,
+    subject: subject,
+    htmlContent: htmlContent
+  };
+
 };
 
 module.exports = sendMail;
