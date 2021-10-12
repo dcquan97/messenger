@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 let Schema = mongoose.Schema;
 
@@ -12,7 +13,7 @@ let UserSchema = new Schema({
   local: {
     email: {type: String, trim: true},
     password: String,
-    isActice: {type: Boolean, default: false},
+    isActive: {type: Boolean, default: false},
     verifyToken: String
   },
   facebook: {
@@ -46,8 +47,19 @@ UserSchema.statics = {
   verify(token) {
     return this.findOneAndUpdate(
       {"local.verifyToken": token},
-      {"local.isActice": true, "local.verifyToken": null}
+      {"local.isActive": true, "local.verifyToken": null}
     ).exec();
+  },
+
+  findUserById(id) {
+    return this.findById(id).exec();
+  }
+};
+
+UserSchema.methods = {
+  comparePassword(password) {
+    //return a promise has result is true or false
+    return bcrypt.compare(password, this.local.password);
   }
 };
 

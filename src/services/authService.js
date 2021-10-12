@@ -13,7 +13,7 @@ let register = (email, gender, password, protocol, host) => {
       if (userByEmail.deletedAt != null) {
         return reject(transErrors.account_remove);
       }
-      if (!userByEmail.local.isActice) {
+      if (!userByEmail.local.isActive) {
         return reject(transErrors.account_not_active);
       }
       return reject(transErrors.account_in_use);

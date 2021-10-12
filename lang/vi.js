@@ -8,7 +8,9 @@ export const transValidation = {
 export const transErrors = {
   account_in_use: "Email đã tồn tại.",
   account_remove: "Tài khoản này đã bị gỡ khỏi hệ thống, vui lòng liên hệ bộ phận hỗ trợ của chúng tôi.",
-  account_not_active: "Vui lòng kiểm tra email để kích hoạt tài khoản."
+  account_not_active: "Vui lòng kiểm tra email để kích hoạt tài khoản.",
+  login_failed: "Sai tài khoản hoặc mật khẩu.",
+  server_error: "Lỗi hệ thống, vui lòng báo cho hỗ trợ của chúng tôi, xin cảm ơn!."
 };
 
 export const transSuccess = {
@@ -16,7 +18,12 @@ export const transSuccess = {
     return `Tài khoản <strong>${userEmail}</strong> đã được đăng ký thành công, vui lòng kiểm tra email để kích hoạt tài khoản, Xin cảm ơn!`;
   },
 
-  account_active: "Tài khoản đã được kích hoạt thành công."
+  account_active: "Tài khoản đã được kích hoạt thành công.",
+  loginSuccess: (username) => {
+    return `Xin chào ${username}, chúc bạn một ngày tốt lành.`
+  },
+
+  logout_success: "Đăng xuất tài khoản thành công."
 };
 
 export const transMail = {

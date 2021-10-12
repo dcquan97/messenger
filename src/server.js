@@ -5,6 +5,7 @@ import initRoutes from "./routes/web";
 import connectFlash from "connect-flash";
 import bodyParser from "body-parser";
 import configSession from "./config/session";
+import passport from "passport";
 
 require('dotenv').config();
 
@@ -26,6 +27,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Enable flash message
 app.use(connectFlash());
+
+// Config passport js
+app.use(passport.initialize());
+app.use(passport.session());
 
 //config routes
 initRoutes(app);
