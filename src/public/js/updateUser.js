@@ -8,16 +8,16 @@ function updateUserInfo() {
     let math = ["image/png", "image/jpeg", "image/jpg"];
     let limit = 10485763; //byte = 1MB
 
-    if ($.inArray(fileData.type, math) === -1) {
-      alertify.notify("File không hợp lệ, chỉ chấp nhận file png & jpg.", "error", 7);
-      $(this).val(null);
-      return false;
-    }
-    if (fileData.type > limit) {
-      alertify.notify("Ảnh upload tối đa cho phép là 1MB.", "error", 7);
-      $(this).val(null);
-      return false;
-    }
+    // if ($.inArray(fileData.type, math) === -1) {
+    //   alertify.notify("File không hợp lệ, chỉ chấp nhận file png & jpg.", "error", 7);
+    //   $(this).val(null);
+    //   return false;
+    // }
+    // if (fileData.type > limit) {
+    //   alertify.notify("Ảnh upload tối đa cho phép là 1MB.", "error", 7);
+    //   $(this).val(null);
+    //   return false;
+    // }
 
     if (typeof (FileReader) != "undefined") {
       let imagePreview = $("#image-edit-profile");
@@ -28,13 +28,17 @@ function updateUserInfo() {
         $("<img>", {
           "src": element.target.result,
           "class": "avatar img-circle",
-          "alt": "avatar",
-          "id": "user-modal-avatar"
+          "id": "user-modal-avatar",
+          "alt": "avatar"
         }).appendTo(imagePreview);
       }
-
       imagePreview.show();
       fileReader.readAsDataURL(fileData);
+
+      let formData = new FormData();
+      formData.append("avatar", fileData);
+
+      userAvatar = formData;
     } else {
       alertify.notify("Trình duyệt của bạn không hỗ trợ FileReader.")
     }
@@ -79,14 +83,17 @@ $(document).ready(function() {
       processData: false,
       data: userAvatar,
       success: function(result) {
-        //
+        console.log(result);
       },
-      errors: function(result) {
-        //
+      error: function(error) {
+        // display error
+        $(".user-modal-alert-error").find("span").text(error.responseText);
+        $(".user-modal-alert-error").css("display", "block");
+
+        //reset all
+        $("#input-btn-cancel-update-user").click();
       }
     });
-    // console.log(userAvatar);
-    // console.log(userInfo);
   });
 
   $("#input-btn-cancel-update-user").bind("click", function() {

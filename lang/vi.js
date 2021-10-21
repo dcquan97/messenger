@@ -10,7 +10,9 @@ export const transErrors = {
   account_remove: "Tài khoản này đã bị gỡ khỏi hệ thống, vui lòng liên hệ bộ phận hỗ trợ của chúng tôi.",
   account_not_active: "Vui lòng kiểm tra email để kích hoạt tài khoản.",
   login_failed: "Sai tài khoản hoặc mật khẩu.",
-  server_error: "Lỗi hệ thống, vui lòng báo cho hỗ trợ của chúng tôi, xin cảm ơn!."
+  server_error: "Lỗi hệ thống, vui lòng báo cho hỗ trợ của chúng tôi, xin cảm ơn!.",
+  avatar_type: "File không hợp lệ, chỉ chấp nhận file png & jpg.",
+  avatar_size: "Ảnh upload tối đa cho phép là 1MB."
 };
 
 export const transSuccess = {
