@@ -1,8 +1,9 @@
 import multer from "multer";
 import {app} from "./../config/app";
-import {transErrors} from "./../../lang/vi";
+import {transErrors, transSuccess} from "./../../lang/vi";
 import uuidv4 from "uuid/v4";
 import {user} from "./../services/index";
+import fsExtra from "fs-extra";
 
 
 let storageAvatar = multer.diskStorage({
@@ -26,7 +27,7 @@ let avatarUploadFile = multer({
 }).single("avatar");
 
 let updateAvatar = (req, res) => {
-  avatarUploadFile(req, res, (error) => {
+  avatarUploadFile(req, res, async (error) => {
     if(error) {
       if(error.message) {
         return res.status(500).send(transErrors.avatar_size);
@@ -42,8 +43,15 @@ let updateAvatar = (req, res) => {
       let userUpdate = await user.updateUser(req.user._id, updateUserItem);
 
       // remove old user avatar
-    } catch (error) {
+      await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`);
 
+      let result = {
+        message: transSuccess.avatar_updated,
+        imageSrc: `/images/user/${req.file.filename}`
+      };
+      return res.status(200).send(result);
+    } catch (error) {
+      return res.status(500).send(error);
     }
   });
 }

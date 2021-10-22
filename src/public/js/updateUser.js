@@ -8,16 +8,16 @@ function updateUserInfo() {
     let math = ["image/png", "image/jpeg", "image/jpg"];
     let limit = 10485763; //byte = 1MB
 
-    // if ($.inArray(fileData.type, math) === -1) {
-    //   alertify.notify("File không hợp lệ, chỉ chấp nhận file png & jpg.", "error", 7);
-    //   $(this).val(null);
-    //   return false;
-    // }
-    // if (fileData.type > limit) {
-    //   alertify.notify("Ảnh upload tối đa cho phép là 1MB.", "error", 7);
-    //   $(this).val(null);
-    //   return false;
-    // }
+    if ($.inArray(fileData.type, math) === -1) {
+      alertify.notify("File không hợp lệ, chỉ chấp nhận file png & jpg.", "error", 7);
+      $(this).val(null);
+      return false;
+    }
+    if (fileData.type > limit) {
+      alertify.notify("Ảnh upload tối đa cho phép là 1MB.", "error", 7);
+      $(this).val(null);
+      return false;
+    }
 
     if (typeof (FileReader) != "undefined") {
       let imagePreview = $("#image-edit-profile");
@@ -83,7 +83,14 @@ $(document).ready(function() {
       processData: false,
       data: userAvatar,
       success: function(result) {
-        console.log(result);
+        // display success
+        $(".user-modal-alert-success").find("span").text(result.message);
+        $(".user-modal-alert-success").css("display", "block");
+
+        //update avatar
+        $("#navbar-avatar").attr("src", result.imageSrc);
+
+        $("#input-btn-cancel-update-user").click();
       },
       error: function(error) {
         // display error
@@ -99,6 +106,7 @@ $(document).ready(function() {
   $("#input-btn-cancel-update-user").bind("click", function() {
     userAvatar = null;
     userInfo = {};
+    $("#input-change-avatar").val(null);
     $("#user-modal-avatar").attr("src", originAvatarSrc);
   });
 });
