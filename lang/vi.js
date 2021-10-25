@@ -16,7 +16,9 @@ export const transErrors = {
   login_failed: "Sai tài khoản hoặc mật khẩu.",
   server_error: "Lỗi hệ thống, vui lòng báo cho hỗ trợ của chúng tôi, xin cảm ơn!.",
   avatar_type: "File không hợp lệ, chỉ chấp nhận file png & jpg.",
-  avatar_size: "Ảnh upload tối đa cho phép là 1MB."
+  avatar_size: "Ảnh upload tối đa cho phép là 1MB.",
+  account_undefined: "Tài khoản không tồn tại.",
+  user_current_password_failed: "Mật khẩu hiện tại không chính xác."
 };
 
 export const transSuccess = {
@@ -31,7 +33,8 @@ export const transSuccess = {
 
   logout_success: "Đăng xuất tài khoản thành công.",
   // avatar_updated: "Cập nhật ảnh đại diện thành công.",
-  user_info_updated: "Cập nhật thông tin thành công."
+  user_info_updated: "Cập nhật thông tin thành công.",
+  user_password_updated: "Cập nhật mật khẩu thành công."
 };
 
 export const transMail = {

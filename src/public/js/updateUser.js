@@ -233,6 +233,32 @@ function callUpdateUserInfo() {
   });
 };
 
+function callUpdateUserPassword() {
+  $.ajax({
+    url: "/user/update-password",
+    type: "put",
+    data: userUpdatePassword,
+    success: function(result) {
+      console.log(result);
+      // display success
+      $(".user-modal-password-alert-success").find("span").text(result.message);
+      $(".user-modal-password-alert-success").css("display", "block");
+
+      //reset all
+      $("#input-btn-cancel-update-user-password").click();
+    },
+    error: function(error) {
+      console.log(error);
+      // display error
+      $(".user-modal-password-alert-error").find("span").text(error.responseText);
+      $(".user-modal-password-alert-error").css("display", "block");
+
+      //reset all
+      $("#input-btn-cancel-update-user-password").click();
+    }
+  });
+};
+
 $(document).ready(function() {
 
   originAvatarSrc = $("#user-modal-avatar").attr("src");
@@ -272,23 +298,15 @@ $(document).ready(function() {
     (originUserInfo.gender == "male") ? $("#input-change-gender-male").click() : $("#input-change-gender-female").click()
     $("#input-change-address").val(originUserInfo.address);
     $("#input-change-phone").val(originUserInfo.phone);
-    $("#btn-close-modal").click();
+    // $("#btn-close-modal").click();
   });
 
   $("#input-btn-update-user-password").bind("click", function() {
-    if($.isEmptyObject(userInfo) && !userAvatar) {
-      alertify.notify("Không có thông tin mới cần cập nhật.", "error", 7);
+    if(!userUpdatePassword.currentPassword || !userUpdatePassword.newPassword || !userUpdatePassword.confirmNewPassword) {
+      alertify.notify("Bạn cần điền đầy đủ thông tin cần cập nhật.", "error", 7);
       return false;
     }
-
-    if(userAvatar) {
-      callUpdateUserAvatar();
-    }
-
-    if(!$.isEmptyObject(userInfo)) {
-      callUpdateUserInfo();
-    }
-
+    callUpdateUserPassword();
   });
 
   $("#input-btn-cancel-update-user-password").bind("click", function() {
@@ -297,6 +315,6 @@ $(document).ready(function() {
     $("#input-change-current-password").val(null);
     $("#input-change-new-password").val(null);
     $("#input-change-confirm-new-password").val(null);
-    $("#btn-close-modal").click();
+    // $("#btn-close-modal").click();
   });
 });
