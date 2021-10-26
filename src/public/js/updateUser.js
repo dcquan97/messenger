@@ -4,6 +4,29 @@ let originAvatarSrc = null;
 let originUserInfo = {};
 let userUpdatePassword = {};
 
+function callLogout() {
+  let timeInterval ;
+  Swal.fire({
+    position: "top-end",
+    title: "Tự động đăng xuất sau 5 giây",
+    html: "Thời gian: <strong></strong>",
+    timer: 5000,
+    onBeforeOpen: () => {
+      Swal.showLoading();
+      timeInterval = setInterval(() => {
+        Swal.getContent().querySelector("strong").textContent = Math.ceil(Swal.getTimerLeft() / 1000);
+      }, 1000);
+    },
+    onClose: () => {
+      clearInterval(timeInterval);
+    }
+  }).then((result) => {
+    $.get("/logout", function() {
+      location.reload();
+    })
+  });
+};
+
 function updateUserInfo() {
   $("#input-change-avatar").bind("change", function() {
     let fileData = $(this).prop("files")[0];
@@ -167,7 +190,7 @@ function updateUserInfo() {
 
     userUpdatePassword.confirmNewPassword = confirmNewPassword;
   });
-}
+};
 
 function callUpdateUserAvatar() {
   $.ajax({
@@ -239,16 +262,17 @@ function callUpdateUserPassword() {
     type: "put",
     data: userUpdatePassword,
     success: function(result) {
-      console.log(result);
       // display success
       $(".user-modal-password-alert-success").find("span").text(result.message);
       $(".user-modal-password-alert-success").css("display", "block");
 
       //reset all
       $("#input-btn-cancel-update-user-password").click();
+
+      //logout after change password success
+      callLogout();
     },
     error: function(error) {
-      console.log(error);
       // display error
       $(".user-modal-password-alert-error").find("span").text(error.responseText);
       $(".user-modal-password-alert-error").css("display", "block");
@@ -306,7 +330,24 @@ $(document).ready(function() {
       alertify.notify("Bạn cần điền đầy đủ thông tin cần cập nhật.", "error", 7);
       return false;
     }
-    callUpdateUserPassword();
+
+    Swal.fire({
+      title: "Bạn có chắc chắn muốn thay đổi mật khẩu ?",
+      text: "Bạn không thể hoàn thác lại quá trình này!",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#2ECC71",
+      cancelButtonColor: "#ff7675",
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Hủy"
+    }).then((result) => {
+      if (!result.value) {
+        $("#input-btn-cancel-update-user-password").click();
+        return false;
+      }
+      callUpdateUserPassword();
+    })
+
   });
 
   $("#input-btn-cancel-update-user-password").bind("click", function() {
