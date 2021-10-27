@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { contact } from "../services";
 
 let Schema = mongoose.Schema;
 
@@ -21,6 +22,30 @@ ContactSchema.statics = {
       $or: [
         {"userId": userId},
         {"contactId": userId}
+      ]
+    }).exec();
+  },
+
+  checkExists(userId, contactId) {
+    return this.findOne({
+      $or: [
+        {$and: [
+          {"userId": userId},
+          {"contactId": contactId}
+        ]},
+        {$and: [
+          {"userId": contactId},
+          {"contacId": userId}
+        ]}
+      ]
+    }).exec();
+  },
+
+  removeRequestContact(userId, contacId) {
+    return this.removeById({
+      $and: [
+        {"userId": userId},
+        {"contacId": contacId}
       ]
     }).exec();
   }
