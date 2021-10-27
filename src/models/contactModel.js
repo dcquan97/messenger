@@ -20,7 +20,7 @@ ContactSchema.statics = {
     return this.find({
       $or: [
         {"userId": userId},
-        {"contactId": contactId}
+        {"contactId": userId}
       ]
     }).exec();
   }
