@@ -7,4 +7,4 @@ let initSockets = (io) => {
   addNewContact(io);
 }
 
-module.export = initSockets;
+module.exports = initSockets;
