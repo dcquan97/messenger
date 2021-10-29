@@ -1,7 +1,7 @@
 /**
  * @param io from socket.io library
  */
-let addNewContact = (io) => {
+ let removeRequestContact = (io) => {
   let clients = {};
   io.on("connection", (socket) => {
 
@@ -13,17 +13,15 @@ let addNewContact = (io) => {
       clients[currentUserId] = [socket.id];
     }
 
-    socket.on("add-new-contact", (data) =>{
+    socket.on("remove-request-contact", (data) =>{
       let currentUser = {
-        id: socket.request.user._id,
-        username: socket.request.user.username,
-        avatar: socket.request.user.avatar
+        id: socket.request.user._id
       };
 
       // emit notification
       if (clients[data.contactId]) {
         clients[data.contactId].forEach(socketId => {
-          io.to(socketId).emit("response-add-new-contact", currentUser);
+          io.to(socketId).emit("response-remove-request-contact", currentUser);
         });
       };
     });
@@ -38,4 +36,4 @@ let addNewContact = (io) => {
   });
 }
 
-module.exports = addNewContact;
+module.exports = removeRequestContact;
