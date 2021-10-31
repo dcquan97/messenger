@@ -1,17 +1,13 @@
+import { pushSocketIdToArray, emitNofifyToArray, removeSocketIdToArray} from "./../../helpers/socketHelper.js"
+
 /**
  * @param io from socket.io library
  */
 let addNewContact = (io) => {
   let clients = {};
   io.on("connection", (socket) => {
-
     // push socket id to array
-    let currentUserId = socket.request.user._id;
-    if (clients[currentUserId]) {
-      clients[currentUserId].push(socket.id);
-    } else {
-      clients[currentUserId] = [socket.id];
-    }
+    clients = pushSocketIdToArray(clients, socket.request.user._id, socket.id);
 
     socket.on("add-new-contact", (data) =>{
       let currentUser = {
@@ -22,18 +18,13 @@ let addNewContact = (io) => {
 
       // emit notification
       if (clients[data.contactId]) {
-        clients[data.contactId].forEach(socketId => {
-          io.to(socketId).emit("response-add-new-contact", currentUser);
-        });
+        emitNofifyToArray(clients, data.contactId, io, "response-add-new-contact", currentUser);
       };
     });
 
+    // remove socket id when socket disconected
     socket.on("disconnect", () => {
-      // remove socket id when socket disconected
-      clients[currentUserId] = clients[currentUserId].filter(socketId =>  socketId !== socket.id );
-      if (!clients[currentUserId].length) {
-        delete clients[currentUserId];
-      };
+      clients = removeSocketIdToArray(clients, socket.request.user._id, socket);
     });
   });
 }
