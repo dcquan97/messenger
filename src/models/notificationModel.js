@@ -32,6 +32,15 @@ NotificationSchema.statics = {
    */
   getByUserIdAndLimit(userId, limit) {
     return this.find({ "receiverId": userId }).sort({"createdAt": -1}).limit(limit).exec();
+  },
+
+  countNotifUnread(userId) {
+    return this.count({
+      $and: [
+        {"receiverId": userId},
+        {"isRead": true}
+      ]
+    }).exec();
   }
 };
 
@@ -43,10 +52,16 @@ const NOTIFICATION_TYPES = {
 const NOTIFICATION_CONTENT = {
   getContent: (notificationType, isRead, userId, username, userAvatar) => {
     if (notificationType === NOTIFICATION_TYPES.ADD_CONTACT) {
-      return  `<span data-uid="${userId}">
-                <img class="avatar-small" src="/images/users/${userAvatar}" alt="">
-                <strong>${username}</strong> đã gửi cho bạn một lời mời kết bạn!
-              </span><br><br><br>`;
+      if (!isRead) {
+        return  `<div class="notif-readed-false" data-uid="${userId}">
+                  <img class="avatar-small" src="/images/users/${userAvatar}" alt="">
+                  <strong>${username}</strong> đã gửi cho bạn một lời mời kết bạn!
+                </div>`;
+      }
+      return  `<div data-uid="${userId}">
+                  <img class="avatar-small" src="/images/users/${userAvatar}" alt="">
+                  <strong>${username}</strong> đã gửi cho bạn một lời mời kết bạn!
+                </div>`;
     }
     return "No matching with any notification type."
   }
@@ -55,5 +70,5 @@ const NOTIFICATION_CONTENT = {
 module.exports = {
   model: mongoose.model("notification", NotificationSchema),
   types: NOTIFICATION_TYPES,
-  content: NOTIFICATION_CONTENT
+  contents: NOTIFICATION_CONTENT
 };

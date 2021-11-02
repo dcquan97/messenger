@@ -6,9 +6,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#" target="__blank">
-              <!-- <img src="/images/logo_favicon/logo.png" alt="logo"> -->
-          </a>
+          <!-- <a class="navbar-brand" href="#" target="__blank">
+              <img src="/images/logo_favicon/logo.png" alt="logo">
+          </a> -->
       </div>
       <div class="col-sm-3 no-padding">
           <ul class="nav navbar-nav navbar-left no-padding-start">
@@ -33,22 +33,32 @@
               <li>
                   <a href="#contactsModal" data-toggle="modal" title="Quản lý liên lạc" id="show-modal-contacts">
                       <i class="fa fa-user-plus"></i>
-                      <div class="noti_contact_counter"></div>
+                      <div class="noti_contact_counter display-none"></div>
                   </a>
               </li>
               <li>
-                  <a href="#" id="noti_Button" data-toggle="modal" title="Thông báo">
+                  <a href="javascript:void(0)" id="noti_Button" data-toggle="modal" title="Thông báo">
                       <i class="fa fa-globe"></i>
-                      <div class="noti_counter"></div>
+                      <% if (notifications.length > 0) { %>
+                        <div class="noti_counter">
+                          <%= notifications.length%>
+                        </div>
+                      <% } else { %>
+                        <div class="noti_counter display-none"></div>
+                      <% } %>
                       <div id="noti_Container">
                           <div id="notifications">
-                              <h3>Thông báo</h3>
+                              <a href="javascript:void(0)" id="popup-mark-notif-as-read">Đánh dấu tất cả là đã đọc</a>
                               <div class="noti_content">
                                 <% notifications.forEach(function(notification) { %>
-                                    <%- notification %>
+                                  <%- notification %>
                                 <% }); %>
                               </div>
-                              <div class="seeAll"><a href="#">Xem tất cả</a></div>
+                              <div class="seeAll">
+                                <a href="#notificationsModal" data-toggle="modal">
+                                  Xem tất cả
+                                </a>
+                              </div>
                           </div>
                       </div>
                   </a>

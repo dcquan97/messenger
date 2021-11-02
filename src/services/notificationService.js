@@ -8,7 +8,25 @@ let getNotifications = (currentUserId, limit = 10) => {
 
       let getNotifContent = notifications.map( async (notification) => {
         let sender = await UserModel.findUserById(notification.senderId);
-        return NotificationModel.model.content.getContent(notification.type, notification.isRead, sender._id, sender.username, sender.avatar);
+        return NotificationModel.contents.getContent(notification.type, notification.isRead, sender._id, sender.username, sender.avatar);
+      });
+
+      resolve(await Promise.all(getNotifContent));
+
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+let countNotifUnread = (currentUserId, limit = 10) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let notificationsUnread = await NotificationModel.model.countNotifUnread(currentUserId);
+
+      let getNotifContent = notifications.map( async (notification) => {
+        let sender = await UserModel.findUserById(notification.senderId);
+        return NotificationModel.contents.getContent(notification.type, notification.isRead, sender._id, sender.username, sender.avatar);
       });
 
       resolve(await Promise.all(getNotifContent));
@@ -20,5 +38,6 @@ let getNotifications = (currentUserId, limit = 10) => {
 };
 
 module.exports = {
-  getNotifications: getNotifications
+  getNotifications: getNotifications,
+  countNotifUnread: countNotifUnread
 };
