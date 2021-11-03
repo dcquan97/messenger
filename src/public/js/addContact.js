@@ -18,7 +18,7 @@ socket.on("response-add-new-contact", function(user) {
                   <strong>${user.username}</strong> đã gửi cho bạn một lời mời kết bạn!
                 </div>`;
   $(".noti_content").prepend(notif); // popup notification
-  $("ul.list-notifications").prepend(`<li>${notif}</li>`) // modal notification
+  $("ul.list-notifications").prepend(`<li>${notif}</li>`); // modal notification
 
   increaseNumberNotifContact("count-request-contact-received");
 
