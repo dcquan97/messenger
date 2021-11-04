@@ -21,7 +21,7 @@ let getNotifications = (currentUserId, limit = 10) => {
   });
 };
 
-let countNotifUnread = (currentUserId, limit = 10) => {
+let countNotifUnread = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
     try {
       let notificationsUnread = await NotificationModel.model.countNotifUnread(currentUserId);
@@ -52,8 +52,20 @@ let readMore = (currentUserId, skipNumberNotification) => {
   });
 };
 
+let markAllAsRead = (currentUserId, targetUsers) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await NotificationModel.model.markAllAsRead(currentUserId, targetUsers);
+      resolve(true);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getNotifications: getNotifications,
   countNotifUnread: countNotifUnread,
-  readMore: readMore
+  readMore: readMore,
+  markAllAsRead: markAllAsRead
 };

@@ -12,7 +12,8 @@ let getHome = async (req, res) => {
     errors: req.flash("errors"),
     success: req.flash("success"),
     user: req.user,
-    notifications: notifications
+    notifications: notifications,
+    countNotifUnread: countNotifUnread
   });
 };
 
