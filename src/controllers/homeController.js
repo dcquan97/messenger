@@ -1,4 +1,4 @@
-import {notification} from "./../services/index";
+import {notification, contact} from "./../services/index";
 
 
 let getHome = async (req, res) => {
@@ -8,12 +8,36 @@ let getHome = async (req, res) => {
   // get amount notifications unread
   let countNotifUnread = await notification.countNotifUnread(req.user._id);
 
+  // get contacts 10 item one time
+  let contacts = await contact.getContact(req.user._id);
+
+  // get contacts sent 10 item one time
+  let contactsSent = await contact.getContactSent(req.user._id);
+
+  // get contacts receivied 10 item one time
+  let contactsReceived = await contact.getContactReceived(req.user._id);
+
+  // count contacts
+  let countAllContacts = await contact.countAllContacts(req.user._id);
+
+  // count contacts sent
+  let countAllContactsSent = await contact.countAllContactsSent(req.user._id);
+
+  // count contacts received
+  let countAllContactsReceived = await contact.countAllContactsReceived(req.user._id);
+
   return res.render("main/home/home", {
     errors: req.flash("errors"),
     success: req.flash("success"),
     user: req.user,
     notifications: notifications,
-    countNotifUnread: countNotifUnread
+    countNotifUnread: countNotifUnread,
+    contacts: contacts,
+    contactsSent: contactsSent,
+    contactsReceived: contactsReceived,
+    countAllContacts: countAllContacts,
+    countAllContactsSent: countAllContactsSent,
+    countAllContactsReceived: countAllContactsReceived
   });
 };
 
