@@ -35,7 +35,7 @@ ContactSchema.statics = {
         ]},
         {$and: [
           {"userId": contactId},
-          {"contacId": userId}
+          {"contactId": userId}
         ]}
       ]
     }).exec();
