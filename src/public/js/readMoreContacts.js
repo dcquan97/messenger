@@ -41,6 +41,8 @@ $(document).ready(function() {
           </li>`); // modal contacts
       });
 
+      removeContact();
+
       $("#link-read-more-contacts").css("display", "block");
       $(".read-more-contacts-loader").css("display", "none");
     });

@@ -30,6 +30,8 @@ function approveRequestContactReceived() {
 
           decreaseNumberNotification("noti_contact_counter", 1);
 
+          removeContact();
+
           socket.emit("approve-request-contact-received", {contactId: targetId});
         }
       }
@@ -51,8 +53,8 @@ socket.on("response-approve-request-contact-received", function(user) {
   decreaseNumberNotifContact("count-request-contact-sent");
   increaseNumberNotifContact("count-contacts");
 
-  $("#request-contact-sent").find(`ul li[data-uid = ${ user.id }]`);
-  $("#find-user").find(`ul li[data-uid = ${ user.id }]`);
+  $("#request-contact-sent").find(`ul li[data-uid = ${ user.id }]`).remove();
+  $("#find-user").find(`ul li[data-uid = ${ user.id }]`).remove();
 
   let userInfoHtml = `
     <li class="_contactList" data-uid="${ user.id }">
@@ -79,6 +81,7 @@ socket.on("response-approve-request-contact-received", function(user) {
     </li>
   `;
   $("#contacts").find("ul").prepend(userInfoHtml);
+  removeContact();
 });
 
 $(document).ready(function() {
