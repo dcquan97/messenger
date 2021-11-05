@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $("#link-read-more-contacts").bind("click", function() {
-    let skipNumber = $("#request-contact-sent").find("li").length;
+    let skipNumber = $("#contact").find("li").length;
 
     $("#link-read-more-contacts").css("display", "none");
     $(".read-more-contacts-loader").css("display", "inline-block");
@@ -14,7 +14,7 @@ $(document).ready(function() {
         return false;
       }
       newContactUsers.forEach(function(user) {
-        $("#request-contact-sent")
+        $("#contact")
           .find("ul")
           .append(
             `<li class="_contactList" data-uid="${ user._id }">
