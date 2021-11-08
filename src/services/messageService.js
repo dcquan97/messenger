@@ -1,5 +1,6 @@
 import ContactModel from "./../models/contactModel";
-import UsertModel from "./../models/userModel";
+import UserModel from "./../models/userModel";
+import ChatGroupModel from "./../models/chatGroupModel";
 
 const LIMIT_CONVERSATION_TAKEN = 15;
 
@@ -10,17 +11,25 @@ let getAllConversationItems = (currentUserId) => {
 
       let usersContactPromise = contacts.map( async (contact) => {
         if (contact.contactId == currentUserId) {
-          return await UsertModel.getNormalUserDataById(contact.userId);
+          return await UserModel.getNormalUserDataById(contact.userId);
         } else {
-          return await UsertModel.getNormalUserDataById(contact.contactId);
+          return await UserModel.getNormalUserDataById(contact.contactId);
         }
       });
+      let userConversations = await Promise.all(usersContactPromise);
+      let groupConversations = await ChatGroupModel.getChatGroup(currentUserId, LIMIT_CONVERSATION_TAKEN);
 
-      resolve(await Promise.all(users));
+      console.log(userConversations);
+      console.log("-------------------");
+      console.log(groupConversations);
+
+      resolve(true);
     } catch (error) {
       reject(error);
     }
   });
 };
 
-module.exports = getAllConversationItems();
+module.exports = {
+  getAllConversationItems: getAllConversationItems,
+}
