@@ -151,6 +151,19 @@ function flashMasterNotify() {
   }
 }
 
+function changeTypeChat() {
+  $("#select-type-chat").bind("change", function() {
+    let optionSelected = $("option:selected", this);
+    optionSelected.tab("show");
+
+    if ($(this).val() === "user-chat") {
+      $(".create-group-chat").hide();
+    } else {
+      $(".create-group-chat").show();
+    }
+  });
+}
+
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
@@ -183,4 +196,7 @@ $(document).ready(function() {
 
   // Flash messages ở màn hình master
   flashMasterNotify();
+
+  // Thay đổi kiểu trò chuyện
+  changeTypeChat();
 });
