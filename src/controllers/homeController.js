@@ -27,6 +27,9 @@ let getHome = async (req, res) => {
   let countAllContactsReceived = await contact.countAllContactsReceived(req.user._id);
 
   let getAllConversationItems = await message.getAllConversationItems(req.user._id);
+  let userConversations = getAllConversationItems.userConversations;
+  let groupConversations = getAllConversationItems.groupConversations;
+  let allConversations = getAllConversationItems.allConversations
 
   return res.render("main/home/home", {
     errors: req.flash("errors"),
@@ -40,7 +43,10 @@ let getHome = async (req, res) => {
     countAllContacts: countAllContacts,
     countAllContactsSent: countAllContactsSent,
     countAllContactsReceived: countAllContactsReceived,
-    getAllConversationItems: getAllConversationItems
+    getAllConversationItems: getAllConversationItems,
+    userConversations : userConversations,
+    groupConversations: groupConversations,
+    allConversations: allConversations
   });
 };
 
