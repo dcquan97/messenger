@@ -1321,7 +1321,13 @@ label:focus,
   margin-right: 20px;
 }
 
-.read-more-notif, .read-more-contacts, .read-more-contacts-sent, .read-more-contacts-received {
+.read-more-notif,
+.read-more-contacts,
+.read-more-contacts-sent,
+.read-more-contacts-received,
+.read-more-all-chat,
+.read-more-user-chat,
+.read-more-group-chat {
   text-align: center;
 }
 
@@ -1551,4 +1557,8 @@ label:focus,
 
 .display-important {
   display: inline-block !important;
+}
+
+.tab-content > .active {
+  background-color: #ffffff;
 }
