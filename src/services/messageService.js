@@ -16,11 +16,11 @@ let getAllConversationItems = (currentUserId) => {
       let usersContactPromise = contacts.map( async (contact) => {
         if (contact.contactId == currentUserId) {
           let getUserContact = await UserModel.getNormalUserDataById(contact.userId);
-          getUserContact.createdAt = contact.createdAt;
+          getUserContact.updatedAt = contact.updatedAt;
           return getUserContact;
         } else {
           let getUserContact = await UserModel.getNormalUserDataById(contact.contactId);
-          getUserContact.createdAt = contact.createdAt;
+          getUserContact.updatedAt = contact.updatedAt;
           return getUserContact;
         }
       });
@@ -29,7 +29,7 @@ let getAllConversationItems = (currentUserId) => {
       let allConversations = userConversations.concat(groupConversations);
 
       allConversations = _.sortBy(allConversations, (item) => {
-        return -item.createdAt;
+        return -item.updatedAt;
       });
 
       // get messages to apply in screen chat
