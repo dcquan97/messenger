@@ -34,7 +34,7 @@ let getAllConversationItems = (currentUserId) => {
 
       // get messages to apply in screen chat
       let allConversationWithMessagesPromise = allConversations.map(async (conversation) => {
-        let getMessages = await MessageModel.model.getMessage(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
+        let getMessages = await MessageModel.model.getMessages(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
 
         conversation = conversation.toObject();
         conversation.messages = getMessages;
@@ -51,7 +51,8 @@ let getAllConversationItems = (currentUserId) => {
       resolve({
         userConversations : userConversations,
         groupConversations: groupConversations,
-        allConversations: allConversations
+        allConversations: allConversations,
+        allConversationWithMessages: allConversationWithMessages
       });
     } catch (error) {
       reject(error);

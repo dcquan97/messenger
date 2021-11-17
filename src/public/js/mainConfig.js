@@ -166,6 +166,8 @@ function changeTypeChat() {
 
 function changeScreenChat() {
   $(".room-chat").unbind("click").on("click", function() {
+    $(".person").removeClass("active");
+    $(this).find("li").addClass("active");
     $(this).tab("show");
   });
 }
@@ -207,4 +209,6 @@ $(document).ready(function() {
   changeTypeChat();
 
   changeScreenChat();
+
+  $("ul.people").find("li")[0].click();
 });

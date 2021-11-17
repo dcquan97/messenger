@@ -24,9 +24,8 @@ let MessageSchema = new Schema({
   deletedAt: {type: Number, default: null}
 });
 
-MessageSchema.static = {
-
-  getMessage(senderId, receiverId, limit) {
+MessageSchema.statics = {
+  getMessages(senderId, receiverId, limit) {
     return this.find({
       $or: [
         {$and: [
@@ -38,9 +37,9 @@ MessageSchema.static = {
           {"receiverId": senderId},
         ]}
       ]
-    }).sort({"createdAt": -1}).limit(limit).exec();
+    }).sort({"createdAt": 1}).limit(limit).exec();
   }
-}
+};
 
 const MESSAGE_CONVERSATION_TYPES = {
   PERSONAL: "personal",
