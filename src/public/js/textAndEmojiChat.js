@@ -17,12 +17,10 @@ function textAndEmojiChat(divId) {
         dataTextEmojiForSend.isChatGroup = true;
       }
 
-      console.log(dataTextEmojiForSend);
-
       $.post("/message/add-new-text-emoji", dataTextEmojiForSend, function(data) {
-        //success
+        console.log(data.message);
       }).fail(function(reponse){
-        //errors
+        alertify.notify(reponse.reponseText, "error", 7);
       });
     }
   });

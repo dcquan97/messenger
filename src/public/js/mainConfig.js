@@ -221,5 +221,5 @@ $(document).ready(function() {
 
   changeScreenChat();
 
-  $("ul.people").find("li")[0].click();
+  $("ul.people").find("a")[0].click();
 });
