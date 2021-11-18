@@ -1,5 +1,8 @@
 import {validationResult} from "express-validator/check";
+import {app} from "./../config/app";
+import {transErrors, transSuccess} from "./../../lang/vi";
 import {message} from "./../services/index";
+import multer from "multer";
 
 let addNewTextEmoji = async (req, res) => {
   let errorArr = [];
@@ -33,6 +36,48 @@ let addNewTextEmoji = async (req, res) => {
   }
 };
 
+let storageImageChat = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, app.image_message_directory);
+  },
+  filename: (req, file, callback) => {
+    let math = app.image_message_type;
+    if (math.indexOf(file.mimetype) === -1) {
+      return callback(transErrors.image_message_type, null);
+    }
+
+    let imageName = `${Date.now()}-${file.originalname}`;
+    callback(null, imageName);
+  }
+});
+
+let imageMessageUploadFile = multer({
+  storage: storageImageChat,
+  limits: {fileSize: app.image_message_limit_size}
+}).single("my-image-chat");
+
+let addNewImage = async (req, res) => {
+  imageMessageUploadFile();
+  try {
+    let sender = {
+      id: req.user._id,
+      name: req.user.username,
+      avatar: req.user.avatar,
+    };
+
+    let receiverId = req.body.uid;
+    let messageVal = req.body.messageVal;
+    let isChatGroup = req.body.isChatGroup;
+
+    let newMessage = await message.addNewImage(sender, receiverId, messageVal, isChatGroup);
+
+    return res.status(200).send({message: newMessage});
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
 module.exports = {
   addNewTextEmoji: addNewTextEmoji,
+  addNewImage: addNewImage,
 }

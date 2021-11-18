@@ -25,8 +25,8 @@ $(document).ready(function () {
 
     if (response.currentGroupId) {
       if(response.currentUserId !== $("#dropdown-navbar-user").data("uid")) {
-        let check = $(`.chat[data-chat=${response.currentGroupId}]`).find("div.bubble-typing-gif");
-        if(check.length) {
+        let checkTyping = $(`.chat[data-chat=${response.currentGroupId}]`).find("div.bubble-typing-gif");
+        if(checkTyping.length) {
           return false;
         }
 
@@ -34,8 +34,8 @@ $(document).ready(function () {
         nineScrollRight(response.currentGroupId);
       }
     } else {
-      let check = $(`.chat[data-chat=${response.currentUserId}]`).find("div.bubble-typing-gif");
-      if(check.length) {
+      let checkTyping = $(`.chat[data-chat=${response.currentUserId}]`).find("div.bubble-typing-gif");
+      if(checkTyping.length) {
         return false;
       }
 
