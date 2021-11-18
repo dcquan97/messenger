@@ -2,8 +2,7 @@ import ContactModel from "./../models/contactModel";
 import UserModel from "./../models/userModel";
 import ChatGroupModel from "./../models/chatGroupModel";
 import MessageModel from "./../models/messageModel";
-import _, { reject } from "lodash";
-import { resolve } from "bluebird";
+import _ from "lodash";
 import { transErrors } from "../../lang/vi";
 import {app} from "./../config/app";
 
@@ -41,10 +40,10 @@ let getAllConversationItems = (currentUserId) => {
 
         if (conversation.members) {
           let getMessages = await MessageModel.model.getMessagesInGroup(conversation._id, LIMIT_MESSAGES_TAKEN);
-          conversation.messages = getMessages;
+          conversation.messages = _.reverse(getMessages);
         } else {
           let getMessages = await MessageModel.model.getMessagesInPersonal(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
-          conversation.messages = getMessages;
+          conversation.messages = _.reverse(getMessages);
         }
         return conversation;
       });
@@ -90,8 +89,8 @@ let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
         let newMessageItem = {
           senderId: sender.id,
           receiverId: receiver.id,
-          coversationType: MessageModel.conversationType.GROUP,
-          messageType: MessageModel.messageType.TEXT,
+          coversationType: MessageModel.conversationTypes.GROUP,
+          messageType: MessageModel.messageTypes.TEXT,
           sender: sender,
           receiver: receiver,
           text: messageVal,

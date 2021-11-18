@@ -39,3 +39,4 @@ sh/.env
 
 .env
 src/public/bower_components
+src/public/emojione

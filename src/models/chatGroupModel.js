@@ -5,7 +5,7 @@ let Schema = mongoose.Schema;
 let ChatGroupSchema = new Schema({
   name: String,
   userAmount: {type: Number, min: 3, max: 129},
-  messsageAmount: {type: Number, default: 0},
+  messageAmount: {type: Number, default: 0},
   userId: String,
   members: [
     {userId: String}
@@ -33,10 +33,16 @@ ChatGroupSchema.statics = {
    */
   updateWhenHasNewMessage(id, newMessageAmount) {
     return this.findByIdAndUpdate(id, {
-      "messsageAmount": newMessageAmount,
+      "messageAmount": newMessageAmount,
       "updatedAt": Date.now(),
     }).exec();
-  }
+  },
+
+  getChatGroupIdsByUser(userId) {
+    return this.find({
+      "members": {$elemMatch: {"userId": userId}}
+    }, {_id: 1}).exec();
+  },
 }
 
 module.exports = mongoose.model("chat-group", ChatGroupSchema)
