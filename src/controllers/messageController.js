@@ -57,24 +57,34 @@ let imageMessageUploadFile = multer({
 }).single("my-image-chat");
 
 let addNewImage = async (req, res) => {
-  imageMessageUploadFile();
-  try {
-    let sender = {
-      id: req.user._id,
-      name: req.user.username,
-      avatar: req.user.avatar,
-    };
+  imageMessageUploadFile(req, res, async (error) => {
+    if(error) {
+      if(error.message) {
+        return res.status(500).send(transErrors.image_message_size);
+      }
+      return res.status(500).send(error);
+    }
+    try {
+      let sender = {
+        id: req.user._id,
+        name: req.user.username,
+        avatar: req.user.avatar,
+      };
 
-    let receiverId = req.body.uid;
-    let messageVal = req.body.messageVal;
-    let isChatGroup = req.body.isChatGroup;
+      let receiverId = req.body.uid;
+      let messageVal = req.file;
+      let isChatGroup = req.body.isChatGroup;
 
-    let newMessage = await message.addNewImage(sender, receiverId, messageVal, isChatGroup);
+      let newMessage = await message.addNewImage(sender, receiverId, messageVal, isChatGroup);
 
-    return res.status(200).send({message: newMessage});
-  } catch (error) {
-    return res.status(500).send(error);
-  }
+      // remove image, because this image is saved to mongodb
+
+
+      return res.status(200).send({message: newMessage});
+    } catch (error) {
+      return res.status(500).send(error);
+    }
+  });
 };
 
 module.exports = {

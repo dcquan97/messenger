@@ -33,7 +33,7 @@ function imageChat(divId) {
       processData: false,
       data: messageformData,
       success: function(data) {
-        console.log(data)
+        console.log(data);
       },
       error: function(error) {
         alertify.notify(error.responseText, "error", 7);
