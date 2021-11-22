@@ -3,6 +3,7 @@ import {app} from "./../config/app";
 import {transErrors, transSuccess} from "./../../lang/vi";
 import {message} from "./../services/index";
 import multer from "multer";
+import fsExtra from "fs-extra";
 
 let addNewTextEmoji = async (req, res) => {
   let errorArr = [];
@@ -46,7 +47,7 @@ let storageImageChat = multer.diskStorage({
       return callback(transErrors.image_message_type, null);
     }
 
-    let imageName = `${Date.now()}-${file.originalname}`;
+    let imageName = `${file.originalname}`;
     callback(null, imageName);
   }
 });
@@ -56,7 +57,7 @@ let imageMessageUploadFile = multer({
   limits: {fileSize: app.image_message_limit_size}
 }).single("my-image-chat");
 
-let addNewImage = async (req, res) => {
+let addNewImage = (req, res) => {
   imageMessageUploadFile(req, res, async (error) => {
     if(error) {
       if(error.message) {
@@ -78,7 +79,7 @@ let addNewImage = async (req, res) => {
       let newMessage = await message.addNewImage(sender, receiverId, messageVal, isChatGroup);
 
       // remove image, because this image is saved to mongodb
-
+      await fsExtra.remove(`${app.image_message_directory}/${newMessage.file.fileName}`)
 
       return res.status(200).send({message: newMessage});
     } catch (error) {

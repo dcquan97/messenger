@@ -38,7 +38,7 @@ function updateUserInfo() {
       $(this).val(null);
       return false;
     }
-    if (fileData.type > limit) {
+    if (fileData.size > limit) {
       alertify.notify("Ảnh upload tối đa cho phép là 1MB.", "error", 7);
       $(this).val(null);
       return false;

@@ -1,6 +1,6 @@
 import moment from "moment";
 
-export let bufferToBase64 = (bubberFrom) => {
+export let bufferToBase64 = (bufferFrom) => {
   return Buffer.from(bufferFrom).toString("base64");
 };
 
