@@ -204,6 +204,9 @@ function changeScreenChat() {
 
     // Bật lắng nghe DOM cho việc nhắn tin hình ảnh
     imageChat(divId);
+
+    // Bật lắng nghe DOM cho việc nhắn tin tệp đính kèm
+    attachmentChat(divId);
   });
 }
 
