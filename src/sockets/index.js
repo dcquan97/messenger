@@ -6,6 +6,7 @@ import removeContact from "./contact/removeContact";
 import chatTextEmoji from "./chat/chatTextEmoji";
 import chatImage from "./chat/chatImage";
 import chatAttachment from "./chat/chatAttachment";
+import chatVideo from "./chat/chatVideo";
 import typingOn from "./chat/typingOn";
 import typingOff from "./chat/typingOff";
 
@@ -21,6 +22,7 @@ let initSockets = (io) => {
   chatTextEmoji(io);
   chatImage(io);
   chatAttachment(io);
+  chatVideo(io);
   typingOn(io);
   typingOff(io);
 }
