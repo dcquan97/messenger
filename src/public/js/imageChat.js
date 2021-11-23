@@ -1,7 +1,3 @@
-function bufferToBase64(buffer) {
-  return btoa( new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), ""));
-}
-
 function imageChat(divId) {
   $(`#image-chat-${divId}`).unbind("change").on("change", function() {
     let fileData = $(this).prop("files")[0];
@@ -39,7 +35,6 @@ function imageChat(divId) {
       processData: false,
       data: messageformData,
       success: function(data) {
-        console.log(data);
         let dataToEmit = {
           message: data.message
         };
