@@ -32,12 +32,15 @@ $(document).ready(function() {
     alertify.notify("Người dùng này hiện đang không trực tuyến", "error", 7);
   });
 
+  let iceServerList = $("#ice-server-list").val();
+
   let getPeerId = "";
   const peer = new Peer({
     key: "peerjs",
     host: "peerjs-server-dtquan.herokuapp.com",
     secure: true,
     port: 443,
+    config: {"iceServers": JSON.parse(iceServerList)}
     // debug: 3
   });
 
