@@ -20,12 +20,16 @@ let userOnlineOffline = (io) => {
       clients = pushSocketIdToArray(clients, data.groupChatId, socket.id);
     });
 
-    let listUserOnline = Object.keys(clients);
-    // Step 1: Emit to user after login or f5 web page
-    socket.emit("server-send-list-users-online", listUserOnline);
+    socket.on("check-status", () => {
+      let listUserOnline = Object.keys(clients);
+      // Step 1: Emit to user after login or f5 web page
+      socket.emit("server-send-list-users-online", listUserOnline);
 
-    // Step 2: Emit to all another users when has new user online
-    socket.broadcast.emit("server-send-when-new-user-online", socket.request.user._id);
+      // Step 2: Emit to all another users when has new user online
+      socket.broadcast.emit("server-send-when-new-user-online", socket.request.user._id);
+    });
+
+
 
     // remove socket id when socket disconected
     socket.on("disconnect", () => {

@@ -233,6 +233,11 @@ function callCreateGroupChat() {
 
         // Step 8: Emit new group created
         socket.emit("new-group-created", {groupChat: data.groupChat});
+
+        // Step 9: nothing to code
+
+        // Step 10: Update online
+        socket.emit("check-status");
       })
       .fail(function(response) {
         alertify.notify(response.responseText, "error", 7)
@@ -388,7 +393,10 @@ $(document).ready(function() {
 
     // Step 8: Emit new group created: nothing to code
 
-    // Step 9:
+    // Step 9: Emit when member received a group chat
     socket.emit("member-received-group-chat", {groupChatId: response.groupChat._id});
+
+    // Step 10: update online
+    socket.emit("check-status");
   });
 });
