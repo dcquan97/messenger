@@ -1,6 +1,6 @@
 import express from "express";
-import {home, auth, user, contact, notification, message} from "./../controllers/index";
-import {authValid, userValid, contactValid, messageValid} from "./../validation";
+import {home, auth, user, contact, notification, message, groupChat} from "./../controllers/index";
+import {authValid, userValid, contactValid, messageValid, groupChatValid} from "./../validation";
 import passport from "passport";
 import initPassportLocal from "./../controllers/passportController/local";
 import initPassportFacebook from "./../controllers/passportController/facebook";
@@ -63,6 +63,7 @@ let initRoutes = (app) => {
   router.post("/message/add-new-image", auth.checkLoggedIn, message.addNewImage);
   router.post("/message/add-new-attachment", auth.checkLoggedIn, message.addNewAttachment);
 
+  router.post("group-chat/add-new", auth.checkLoggedIn, groupChatValid.addNewGroup, groupChat.addNewGroup);
   return app.use("/", router);
 }
 

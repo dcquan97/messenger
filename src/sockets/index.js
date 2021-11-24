@@ -9,6 +9,7 @@ import chatAttachment from "./chat/chatAttachment";
 import chatVideo from "./chat/chatVideo";
 import typingOn from "./chat/typingOn";
 import typingOff from "./chat/typingOff";
+import newGroupChat from "./chat/newGroupChat";
 
 /**
  * @param {*} io from socket.io library
@@ -25,6 +26,7 @@ let initSockets = (io) => {
   chatVideo(io);
   typingOn(io);
   typingOff(io);
+  newGroupChat(io);
 }
 
 module.exports = initSockets;
