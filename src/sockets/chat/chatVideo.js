@@ -49,8 +49,8 @@ let chatVideo = (io) => {
         listenerName: data.listenerName,
         listenerPeerId: data.listenerPeerId
       }
-      if (clients[data.callerId]) {
-        emitNofifyToArray(clients, data.callerId, io, "server-send-request-call-to-listener", response);
+      if (clients[data.listenerId]) {
+        emitNofifyToArray(clients, data.listenerId, io, "server-send-request-call-to-listener", response);
       }
     });
 
