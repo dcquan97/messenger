@@ -9,6 +9,7 @@ import chatAttachment from "./chat/chatAttachment";
 import chatVideo from "./chat/chatVideo";
 import typingOn from "./chat/typingOn";
 import typingOff from "./chat/typingOff";
+import userOnlineOffline from "./chat/userOnlineOffline";
 import newGroupChat from "./chat/newGroupChat";
 
 /**
@@ -26,6 +27,7 @@ let initSockets = (io) => {
   chatVideo(io);
   typingOn(io);
   typingOff(io);
+  userOnlineOffline(io);
   newGroupChat(io);
 }
 
