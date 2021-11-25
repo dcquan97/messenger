@@ -108,7 +108,7 @@ function callCreateGroupChat() {
             </div>
             <span class="name">
               <span class="group-chat-name">
-                ${subGroupChatName} %><span>...</span>
+                ${subGroupChatName}<span>...</span>
               </span>
             </span>
             <span class="time">

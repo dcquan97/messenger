@@ -63,7 +63,7 @@ let initRoutes = (app) => {
   router.post("/message/add-new-image", auth.checkLoggedIn, message.addNewImage);
   router.post("/message/add-new-attachment", auth.checkLoggedIn, message.addNewAttachment);
 
-  router.post("group-chat/add-new", auth.checkLoggedIn, groupChatValid.addNewGroup, groupChat.addNewGroup);
+  router.post("/group-chat/add-new", auth.checkLoggedIn, groupChatValid.addNewGroup, groupChat.addNewGroup);
   return app.use("/", router);
 }
 
