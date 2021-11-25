@@ -58,8 +58,12 @@ configSocketIo(io, cookieParser, session.sessionStore);
 // Init all sockets
 initSockets(io);
 
-server.listen(process.env.APP_PORT, process.env.APP_HOST, () =>{
-  console.log(`Hello Trung Quan, I'm running at ${process.env.APP_HOST}:${process.env.APP_PORT}`);
+// server.listen(process.env.PORT, process.env.APP_HOST, () =>{
+//   console.log(`Hello Trung Quan, I'm running at ${process.env.APP_HOST}:${process.env.APP_PORT}`);
+// });
+
+server.listen(process.env.PORT, () =>{
+  console.log(`Hello Trung Quan, I'm running at ${process.env.PORT}`);
 });
 
 // import https from "https";

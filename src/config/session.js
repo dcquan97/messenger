@@ -8,7 +8,7 @@ let MongoStore = connectMongo(session);
  * This variable is where save session, in this case is mongodb
 */
 let sessionStore = new MongoStore({
-  url: `mongodb://localhost:27017/awesome_chat`,
+  url: `${process.env.DB_URI}`,
   autoReconnect: true,
   // autoRemove: "native"
 });
