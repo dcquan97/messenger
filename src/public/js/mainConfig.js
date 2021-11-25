@@ -3,7 +3,7 @@
 
 const socket = io();
 
-function nineScrollLeft() {
+function niceScrollLeft() {
   $('.left').niceScroll({
     smoothscroll: true,
     horizrailenabled: false,
@@ -13,7 +13,11 @@ function nineScrollLeft() {
   });
 }
 
-function nineScrollRight(divId) {
+function resizeNiceScrollLeft() {
+  $(".left").getNiceScroll().resize();
+}
+
+function niceScrollRight(divId) {
   $(`.right .chat[data-chat = ${divId}]`).niceScroll({
     smoothscroll: true,
     horizrailenabled: false,
@@ -169,7 +173,7 @@ function changeScreenChat() {
     $(this).tab("show");
 
     // Cấu hình thanh cuộn bên box chat rightSide.ejs mỗi khi click chuột vào cuộc trò chuyện cụ thể
-    nineScrollRight(divId);
+    niceScrollRight(divId);
 
     // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
     enableEmojioneArea(divId);
@@ -205,7 +209,7 @@ $(document).ready(function() {
   configNotification();
 
   // Cấu hình thanh cuộn
-  nineScrollLeft();
+  niceScrollLeft();
 
   // Icon loading khi chạy ajax
   ajaxLoading();

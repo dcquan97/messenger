@@ -31,7 +31,7 @@ $(document).ready(function () {
         }
 
         $(`.chat[data-chat=${response.currentGroupId}]`).append(messageTyping);
-        nineScrollRight(response.currentGroupId);
+        niceScrollRight(response.currentGroupId);
       }
     } else {
       let checkTyping = $(`.chat[data-chat=${response.currentUserId}]`).find("div.bubble-typing-gif");
@@ -40,7 +40,7 @@ $(document).ready(function () {
       }
 
       $(`.chat[data-chat=${response.currentUserId}]`).append(messageTyping);
-      nineScrollRight(response.currentUserId);
+      niceScrollRight(response.currentUserId);
     }
   });
 
@@ -49,11 +49,11 @@ $(document).ready(function () {
     if (response.currentGroupId) {
       if(response.currentUserId !== $("#dropdown-navbar-user").data("uid")) {
         $(`.chat[data-chat=${response.currentGroupId}]`).find("div.bubble-typing-gif").remove();
-        nineScrollRight(response.currentGroupId);
+        niceScrollRight(response.currentGroupId);
       }
     } else {
       $(`.chat[data-chat=${response.currentUserId}]`).find("div.bubble-typing-gif").remove();
-      nineScrollRight(response.currentUserId);
+      niceScrollRight(response.currentUserId);
     }
   });
 });

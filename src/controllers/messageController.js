@@ -4,6 +4,12 @@ import {transErrors, transSuccess} from "./../../lang/vi";
 import {message} from "./../services/index";
 import multer from "multer";
 import fsExtra from "fs-extra";
+import ejs from "ejs";
+import {lastItemOfArray, convertTimestampToHumanTime, bufferToBase64} from "./../helpers/clientHelper";
+import {promisify} from "util";
+
+// Make ejs function renderFile available with async await
+const renderFile = promisify(ejs.renderFile).bind();
 
 // Handle text and emoji chat
 let addNewTextEmoji = async (req, res) => {
@@ -137,8 +143,42 @@ let addNewAttachment = (req, res) => {
   });
 };
 
+let readMoreAllChat = async (req, res) => {
+  try {
+    let skipPersional = +(req.query.skipPersional);
+
+    let skipGroup = +(req.query.skipGroup);
+
+    let newAllConversations = await message.readMoreAllChat(req.user._id, skipPersional, skipGroup);
+
+    let dataToRender = {
+      newAllConversations: newAllConversations,
+      convertTimestampToHumanTime: convertTimestampToHumanTime,
+      lastItemOfArray: lastItemOfArray,
+      bufferToBase64: bufferToBase64,
+      user: req.user
+    };
+
+    let leftSideData = await renderFile("src/views/main/readMoreConversations/_leftSide.ejs", dataToRender);
+    let rightSideData = await renderFile("src/views/main/readMoreConversations/_rightSide.ejs", dataToRender);
+    let imageModalData = await renderFile("src/views/main/readMoreConversations/_imageModal.ejs", dataToRender);
+    let attachmentsModalData = await renderFile("src/views/main/readMoreConversations/_attachmentsModal.ejs", dataToRender);
+
+
+    return res.status(200).send({
+      leftSideData: leftSideData,
+      rightSideData: rightSideData,
+      imageModalData: imageModalData,
+      attachmentsModalData: attachmentsModalData
+    });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
 module.exports = {
   addNewTextEmoji: addNewTextEmoji,
   addNewImage: addNewImage,
-  addNewAttachment: addNewAttachment
+  addNewAttachment: addNewAttachment,
+  readMoreAllChat: readMoreAllChat
 }
