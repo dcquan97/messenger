@@ -176,6 +176,37 @@ let readMoreAllChat = async (req, res) => {
   }
 };
 
+let readMore = async (req, res) => {
+  try {
+    let skilMessage = +(req.query.skilMessage);
+    let targetId = (req.query.targetId);
+    let chatInGroup = (req.query.chatInGroup === "true");
+
+    let newMessages = await message.readMore(req.user._id, skilMessage, targetId, chatInGroup);
+
+    // get more item
+    let dataToRender = {
+      newMessages: newMessages,
+      bufferToBase64: bufferToBase64,
+      user: req.user
+    };
+
+    let leftSideData = await renderFile("src/views/main/readMoreMessages/_leftSide.ejs", dataToRender);
+    let rightSideData = await renderFile("src/views/main/readMoreMessages/_rightSide.ejs", dataToRender);
+    let imageModalData = await renderFile("src/views/main/readMoreMessages/_imageModal.ejs", dataToRender);
+    let attachmentsModalData = await renderFile("src/views/main/readMoreMessages/_attachmentsModal.ejs", dataToRender);
+
+    return res.status(200).send({
+      leftSideData: leftSideData,
+      rightSideData: rightSideData,
+      imageModalData: imageModalData,
+      attachmentsModalData: attachmentsModalData
+    });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
 module.exports = {
   addNewTextEmoji: addNewTextEmoji,
   addNewImage: addNewImage,
