@@ -8,7 +8,7 @@ let MongoStore = connectMongo(session);
  * This variable is where save session, in this case is mongodb
 */
 let sessionStore = new MongoStore({
-  url: `mongodb://dcqbean:iEei6d8Sk58jhAVm@cluster0.pti2l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+  url: `mongodb://dcqbean:gg1R3pjkHuzJnFwU@cluster0-shard-00-00.pti2l.mongodb.net:27017,cluster0-shard-00-01.pti2l.mongodb.net:27017,cluster0-shard-00-02.pti2l.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-ev8rtj-shard-0&authSource=admin&retryWrites=true&w=majority`,
   autoReconnect: true,
   // autoRemove: "native"
 });
