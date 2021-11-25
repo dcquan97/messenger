@@ -1,7 +1,6 @@
 {
   "name": "messenger",
   "version": "1.0.0",
-  "type": "module",
   "description": "Messenger Chat",
   "main": "server.js",
   "scripts": {
