@@ -234,7 +234,9 @@ $(document).ready(function() {
   convertEmoji();
 
   // Click vào phần tử đầu tiên của cuộc trò chuyện khi load trang web
-  $("ul.people").find("a")[0].click();
+  if ($("ul.people").find("a").length) {
+    $("ul.people").find("a")[0].click();
+  }
 
   $("#video-chat-group").bind("click", function() {
     alertify.notify("Tính năng này không khả dụng với nhóm trò chuyện. Vui lòng thử lại với trò chuyện cá nhân.", "error", 7)
