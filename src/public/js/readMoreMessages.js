@@ -1,5 +1,11 @@
 function readMoreMessages() {
   $(".right .chat").scroll(function() {
+
+    // get the first message
+    let firstMessage = $(this).find(".bubble:first");
+    // get position of first message
+    let currentOffset = firstMessage.offset().top - $(this).scrollTop();
+
     if ($(this).scrollTop() === 0) {
       let messageLoading = `<img src="images/chat/message-loading.gif" class="message-loading" />`;
       $(this).prepend(messageLoading);
@@ -8,8 +14,34 @@ function readMoreMessages() {
       let skipMessage = $(this).find("div.bubble").length;
       let chatInGroup = $(this).hasClass("chat-in-group") ? true : false;
 
-      $.get(`/message/read-more?skipMessage-${skipMessage}&targetId=${targetId}&chatInGroup=${chatInGroup}`, function(data) {
-        console.log(data);
+      let thisDom = $(this);
+
+      $.get(`/message/read-more?skipMessage=${skipMessage}&targetId=${targetId}&chatInGroup=${chatInGroup}`, function(data) {
+        if (data.rightSideData.trim() === "") {
+          alertify.notify("Bạn không còn tin nhắn nào trong cuộc trò chuyện.", "error", 7);
+          thisDom.find("img.message-loading").remove();
+          return false;
+        }
+
+        // Step 1: handle rightSide
+        $(`.right .chat[data-chat=${targetId}]`).prepend(data.rightSideData);
+
+        // Step 2: prevent scroll
+        $(`.right .chat[data-chat=${targetId}]`).scrollTop(firstMessage.offset().top - currentOffset);
+        // Step 3: convert emoji
+        convertEmoji();
+
+        // Step 4: handle imageModal
+        $(`#imagesModal_${targetId}`).find("div.all-images").append(data.imageModalData);
+
+        // Step 5: call gridPhotos
+        gridPhotos(5);
+
+        // Step 6: handle attachmentsModal
+        $(`#attachmentsModal_${targetId}`).find("ul.list-attachments").append(data.attachmentsModalData);
+
+        // Step 7: remove messages loading
+
       });
     }
   });

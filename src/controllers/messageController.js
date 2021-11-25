@@ -178,11 +178,11 @@ let readMoreAllChat = async (req, res) => {
 
 let readMore = async (req, res) => {
   try {
-    let skilMessage = +(req.query.skilMessage);
+    let skipMessage = +(req.query.skipMessage);
     let targetId = (req.query.targetId);
     let chatInGroup = (req.query.chatInGroup === "true");
 
-    let newMessages = await message.readMore(req.user._id, skilMessage, targetId, chatInGroup);
+    let newMessages = await message.readMore(req.user._id, skipMessage, targetId, chatInGroup);
 
     // get more item
     let dataToRender = {
@@ -191,13 +191,11 @@ let readMore = async (req, res) => {
       user: req.user
     };
 
-    let leftSideData = await renderFile("src/views/main/readMoreMessages/_leftSide.ejs", dataToRender);
     let rightSideData = await renderFile("src/views/main/readMoreMessages/_rightSide.ejs", dataToRender);
     let imageModalData = await renderFile("src/views/main/readMoreMessages/_imageModal.ejs", dataToRender);
     let attachmentsModalData = await renderFile("src/views/main/readMoreMessages/_attachmentsModal.ejs", dataToRender);
 
     return res.status(200).send({
-      leftSideData: leftSideData,
       rightSideData: rightSideData,
       imageModalData: imageModalData,
       attachmentsModalData: attachmentsModalData
@@ -211,5 +209,6 @@ module.exports = {
   addNewTextEmoji: addNewTextEmoji,
   addNewImage: addNewImage,
   addNewAttachment: addNewAttachment,
-  readMoreAllChat: readMoreAllChat
+  readMoreAllChat: readMoreAllChat,
+  readMore: readMore
 }
