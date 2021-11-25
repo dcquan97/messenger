@@ -14,7 +14,7 @@ import configSocketIo from "./config/socketio";
 import events from "events";
 import * as configApp from "./config/app";
 
-require('dotenv').config();
+// require('dotenv').config();
 
 // Init app
 let app = express();
@@ -62,7 +62,7 @@ initSockets(io);
 //   console.log(`Hello Trung Quan, I'm running at ${process.env.APP_HOST}:${process.env.APP_PORT}`);
 // });
 
-server.listen(process.env.PORT, () =>{
+server.listen(process.env.PORT || 3000, () =>{
   console.log(`Hello Trung Quan, I'm running at ${process.env.PORT}`);
 });
 
