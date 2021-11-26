@@ -8,7 +8,7 @@ import connectFlash from "connect-flash";
 import bodyParser from "body-parser";
 import session from "./config/session";
 import passport from "passport";
-import http from "http";
+import https from "https";
 import socketio from "socket.io";
 import initSockets from "./sockets/index";
 import cookieParser from "cookie-parser";
@@ -23,7 +23,7 @@ let app = express();
 events.EventEmitter.defaultMaxListeners = configApp.app.max_event_listeners;
 
 // Init server with socket.io & express app
-let server = http.createServer(app);
+let server = https.createServer(app);
 let io = socketio(server);
 
 // Connect to mongodb

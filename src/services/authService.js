@@ -31,7 +31,7 @@ let register = (email, gender, password, protocol, host) => {
     };
 
     let user = await UserModel.createNew(userItem);
-    let linkVerify = `${protocol}://${host}/verify/${user.local.verifyToken}`;
+    let linkVerify = `https://${host}/verify/${user.local.verifyToken}`;
     //send mail
     sendMail(email, transMail.subject, transMail.template(linkVerify))
       .then(success => {
