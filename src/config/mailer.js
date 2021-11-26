@@ -1,10 +1,10 @@
 import nodeMailer from "nodemailer";
 require('dotenv').config();
 
-let adminEmail = process.env.MAIL_USER;
-let adminPassword = process.env.MAIL_PASSWORD;
-let mailHost = process.env.MAIL_HOST;
-let mailPort = process.env.MAIL_PORT;
+let adminEmail = "doantrungquan97@gmail.com";
+let adminPassword = "jeacqikojshwescq";
+let mailHost = "smtp.gmail.com";
+let mailPort = 587;
 
 let sendMail = (to, subject, htmlContent) => {
   let transporter = nodeMailer.createTransport({
