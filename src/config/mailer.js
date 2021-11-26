@@ -10,7 +10,7 @@ let sendMail = (to, subject, htmlContent) => {
   let transporter = nodeMailer.createTransport({
     host: mailHost,
     port: mailPort,
-    secure: true, // use SSL - TLS
+    secure: false, // use SSL - TLS
     auth: {
       user: adminEmail,
       pass: adminPassword
